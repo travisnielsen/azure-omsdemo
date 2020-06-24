@@ -18,5 +18,5 @@ TBD
 
 Details for each service can be found in their respective pages:
 
-* [Inventory Service](services/inventory/inventory.md)
-* [Order Service](services/orders/orders.md)
+* [Inventory Service](services/inventory/README.md)
+* [Order Service](services/orders/README.md)
