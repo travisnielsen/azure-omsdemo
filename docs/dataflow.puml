@@ -1,0 +1,50 @@
+@startuml overview
+!define AzurePuml https://raw.githubusercontent.com/RicardoNiepel/Azure-PlantUML/release/2-1/dist
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
+!includeurl AzurePuml/AzureCommon.puml
+!includeurl AzurePuml/Identity/AzureActiveDirectory.puml
+!includeurl AzurePuml/Web/AzureAPIManagement.puml
+!includeurl AzurePuml/Compute/AzureAppService.puml
+!includeurl AzurePuml/Compute/AzureFunction.puml
+!includeurl AzurePuml/Integration/AzureServiceBus.puml
+!includeurl AzurePuml/Analytics/AzureEventHub.puml
+!includeurl AzurePuml/Databases/AzureCosmosDb.puml
+!includeurl AzurePuml/DevOps/AzureApplicationInsights.puml
+
+
+LAYOUT_LEFT_RIGHT
+
+title Overview
+
+Entity user
+
+' AzureActiveDirectory(aad, "OAuth", "API scopes and authorizations")
+AzureAPIManagement(apim, "API gateway", "Managed Identity / Client Certificate", "Validate OAuth tokens and perform access control checks.")
+AzureFunction(ordersvc, "Orders", "NodeJS 12.13.1", "")
+AzureFunction(inventorysvc, "Inventory", "Java Spring", "")
+AzureFunction(deliverysvc, "Delivery", "NodeJS 12.13.1", "")
+
+AzureEventHub(eh, "Fulfillment stream", "")
+AzureServiceBus(sb, "", "topics: orders, fulfillment")
+
+AzureCosmosDb(orderdb, "Order state", "", "Order with current aggregate status")
+
+Rel(user, apim, "Create order")
+Rel(apim, ordersvc, "Create order" )
+Rel(ordersvc, inventorysvc, "Check inventory")
+Rel(ordersvc, sb, "Create order")
+Rel(ordersvc, orderdb, "Updates order state")
+Rel_Back(inventorysvc, sb, "Receive order")
+Rel_Back(deliverysvc, sb, "Receive order")
+Rel(eh, deliverysvc, "fulfillment stream")
+
+deliverysvc --> sb : "Fulfillment update event"
+ordersvc <-- sb : "Get fulfillment updates"
+
+' Rel(func1, aad, "1. Request Access Token\nManaged Identity\nResource: api://orders")
+' Rel_Back(func1, aad, "2. Access Token\naud:api://orders\nroles: [orders.read]")
+' Rel(func1, apim, "3. Request order status\nAccess Token")
+' Rel(apim, aad, "4. Validate token")
+' Rel_Back(func2, apim, "5. Proxied call\nAPIM client cert\nor\nAPIM Managed Instance token")
+
+@end
