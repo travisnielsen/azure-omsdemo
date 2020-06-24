@@ -18,7 +18,7 @@ Before building and deploying this service, the following configuration files mu
 
 ### ApplicationInsights.json
 
-Directory: project root
+Directory: `services/inventory`
 
 ```json
 {
