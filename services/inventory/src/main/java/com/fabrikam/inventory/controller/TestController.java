@@ -43,9 +43,10 @@ public class TestController {
     }
 
     @GetMapping("/event")
-    public void trackEvent() {
+    public String trackEvent() {
         EventTelemetry telemetry = new EventTelemetry("Some event occurred");
         telemetryClient.trackEvent(telemetry);
+        return "Created EVENT item";
     }
 
     @GetMapping("/exception")
@@ -57,20 +58,26 @@ public class TestController {
 
     @GetMapping("/logtrace")
     public String trackTrace() {
-        LOGGER.trace("test trace message");
-        return "Created trace item";
+        LOGGER.trace("test TRACE message");
+        return "Created TRACE item";
     }
 
     @GetMapping("/loginfo")
     public String trackInfo() {
         LOGGER.info("test info message");
-        return "Created info item";
+        return "Created INFO item";
+    }
+    
+    @GetMapping("/logwarn")
+    public String trackWarn() {
+        LOGGER.warn("test warning message");
+        return "Created WARN item";
     }
 
     @GetMapping("/logerror")
     public String trackError() {
         LOGGER.error("test error message", new Exception("test error exception"));
-        return "Created error item";
+        return "Created ERROR item";
     }
 
 }
