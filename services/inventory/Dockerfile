@@ -4,10 +4,20 @@ FROM openjdk:11.0.1-jre-slim
 COPY applicationinsights-agent-3.0.0-PREVIEW.5.jar /usr/share/inventory/applicationinsights-agent.jar
 COPY ApplicationInsights.json /usr/share/inventory/ApplicationInsights.json
 
-# Add the service itself
+# Configure SSH for App Service
+RUN apt-get update && apt-get install -y openssh-server
+RUN echo 'root:Docker!' | chpasswd
+COPY sshd_config /etc/ssh/
+EXPOSE 80 2222
+
+# Copy in the service and scripts
 ARG JAR_FILE
 COPY target/${JAR_FILE} /usr/share/inventory/service.jar
+COPY startup.sh /scripts/startup.sh
+RUN ["chmod", "+x", "/scripts/startup.sh"]
 
+# Expose the API
 EXPOSE 8080/tcp
-ENTRYPOINT ["java", "-javaagent:/usr/share/inventory/applicationinsights-agent.jar", "-jar", "/usr/share/inventory/service.jar"]
-# ENTRYPOINT ["java", "-jar", "/usr/share/inventory/service.jar"]
+
+ENTRYPOINT ["/scripts/startup.sh"]
+# ENTRYPOINT ["java", "-javaagent:/usr/share/inventory/applicationinsights-agent.jar", "-jar", "/usr/share/inventory/service.jar"]
