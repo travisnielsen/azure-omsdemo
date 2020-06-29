@@ -4,6 +4,7 @@
 !includeurl AzurePuml/AzureCommon.puml
 !includeurl AzurePuml/Identity/AzureActiveDirectory.puml
 !includeurl AzurePuml/Web/AzureAPIManagement.puml
+!includeurl AzurePuml/Web/AzureWebApp.puml
 !includeurl AzurePuml/Compute/AzureAppService.puml
 !includeurl AzurePuml/Compute/AzureFunction.puml
 !includeurl AzurePuml/Integration/AzureServiceBus.puml
@@ -21,7 +22,7 @@ Entity user
 ' AzureActiveDirectory(aad, "OAuth", "API scopes and authorizations")
 AzureAPIManagement(apim, "API gateway", "Managed Identity / Client Certificate", "Validate OAuth tokens and perform access control checks.")
 AzureFunction(ordersvc, "Orders", "NodeJS 12.13.1", "")
-AzureFunction(inventorysvc, "Inventory", "Java Spring", "")
+AzureWebApp(inventorysvc, "Inventory", "Premium-v2 (Linux) JRE11 - Spring Boot", "")
 AzureFunction(deliverysvc, "Delivery", "NodeJS 12.13.1", "")
 
 AzureEventHub(eh, "Fulfillment stream", "")
