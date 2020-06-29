@@ -103,7 +103,7 @@ mvn spring-boot:run
 This project uses a plug-in that automatically creates a local container image via the following Maven comamnd: `mvn install`. Once the command completes, you can run the container and test the service via the auto-assigned port:
 
 ```bash
-docker run -d -P [your_docker_id]/inventory-service:0.0.4-SNAPSHOT
+docker run -d -P [your_docker_id]/inventory-service:0.0.6-SNAPSHOT
 ```
 
 You should be able to reach test URLs such as `http://localhost:[PORT]/dependency` where [PORT] is the assignment made by Docker for local use, which can be found by running the `docker ps` command.
