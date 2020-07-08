@@ -1,0 +1,29 @@
+{
+	"folders": [
+		{
+			"path": "services/inventory",
+			"name": "inventory"
+		},
+		{
+			"path": "services/orders",
+			"name": "orders"		
+		},
+		{
+			"path": "docs",
+			"name": "docs"		
+		},
+		{
+			"path": "media",
+			"name": "media"		
+		},
+		{
+			"path": "scripts",
+			"name": "scripts"		
+		},
+
+	],
+	"settings": {
+		"debug.internalConsoleOptions": "neverOpen",
+		"java.configuration.updateBuildConfiguration": "automatic"
+	}
+}
