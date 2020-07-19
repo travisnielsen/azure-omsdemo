@@ -5,6 +5,10 @@
 			"name": "services"
 		},
 		{
+			"path": "web",
+			"name": "web"
+		},
+		{
 			"path": "docs",
 			"name": "docs"		
 		},
