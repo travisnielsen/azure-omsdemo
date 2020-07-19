@@ -1,12 +1,8 @@
 {
 	"folders": [
 		{
-			"path": "services/inventory",
-			"name": "inventory"
-		},
-		{
-			"path": "services/orders",
-			"name": "orders"		
+			"path": "services",
+			"name": "services"
 		},
 		{
 			"path": "docs",
@@ -17,8 +13,8 @@
 			"name": "media"		
 		},
 		{
-			"path": "scripts",
-			"name": "scripts"		
+			"path": "deployment",
+			"name": "deployment"		
 		},
 
 	],

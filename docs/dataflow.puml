@@ -21,7 +21,7 @@ Entity user
 
 ' AzureActiveDirectory(aad, "OAuth", "API scopes and authorizations")
 AzureAPIManagement(apim, "API gateway", "Managed Identity / Client Certificate", "Validate OAuth tokens and perform access control checks.")
-AzureFunction(ordersvc, "Orders", "NodeJS 12.13.1", "")
+AzureFunction(ordersvc, "Orders", "Premium-v2 (Linux) JRE11 - Spring Boot", "")
 AzureWebApp(inventorysvc, "Inventory", "Premium-v2 (Linux) JRE11 - Spring Boot", "")
 AzureFunction(deliverysvc, "Delivery", "NodeJS 12.13.1", "")
 

@@ -1,11 +1,25 @@
-# To enable ssh & remote debugging on app service change the base image to the one below
-# FROM mcr.microsoft.com/azure-functions/node:3.0-appservice
-FROM mcr.microsoft.com/azure-functions/node:3.0
+FROM openjdk:11.0.1-jre-slim
 
-ENV AzureWebJobsScriptRoot=/home/site/wwwroot \
-    AzureFunctionsJobHost__Logging__Console__IsEnabled=true
+# Add App Insights Java Agent
+COPY applicationinsights-agent-3.0.0-PREVIEW.5.jar /usr/share/inventory/applicationinsights-agent.jar
+COPY ApplicationInsights.json /usr/share/inventory/ApplicationInsights.json
 
-COPY . /home/site/wwwroot
+# Configure SSH for App Service
+# RUN apt-get update && apt-get install -y openssh-server
+# RUN echo 'root:Docker!' | chpasswd
+# COPY sshd_config /etc/ssh/
 
-RUN cd /home/site/wwwroot && \
-    npm install
+# Copy in the service and startup script
+ARG JAR_FILE
+COPY target/${JAR_FILE} /usr/share/inventory/service.jar
+# COPY startup.sh /scripts/startup.sh
+# RUN ["chmod", "+x", "/scripts/startup.sh"]
+
+# Expose the API and SSH
+# EXPOSE 8080/tcp 2222
+EXPOSE 8080
+
+# ENTRYPOINT ["/scripts/startup.sh"]
+
+# Assume 512MB RAM allocated to container. See: https://github.com/dsyer/spring-boot-memory-blog/blob/main/cf.md
+ENTRYPOINT ["java", "-javaagent:/usr/share/inventory/applicationinsights-agent.jar", "-jar", "/usr/share/inventory/service.jar", "-Xmx382293K", "-XX:MaxMetaspaceSize=64M", "-Xss995K"]

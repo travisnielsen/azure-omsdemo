@@ -14,9 +14,23 @@ The following diagram illustrates the basic data flow of this design:
 
 TBD
 
-## Service Deployment
+## Service Configuration
 
 Details for each service can be found in their respective pages:
 
 * [Inventory Service](services/inventory/README.md)
 * [Order Service](services/orders/README.md)
+
+## Solution Deployment (AKS)
+
+First, create a dedicated namespace for hosting this sample application:
+
+```bash
+kubectl create namespace fabrikam
+```
+
+Next, from the root directory use the Helm chart provided in this repo to deploy these microservices to your AKS cluster.
+
+```bash
+helm install fabrikam-oms deployment/helm --namespace fabrikam
+```
