@@ -30,6 +30,8 @@ const Header = () => (
 
 const App = () => {
     let appInsights = null;
+    let apiKey = process.env.REACT_APP_API_KEY;
+    let requestUrl = process.env.REACT_APP_REQUEST_URL;
 
     function trackException() {
         appInsights.trackException({ error: new Error('some error'), severityLevel: SeverityLevel.Error });
@@ -57,17 +59,19 @@ const App = () => {
       }
 
     function ajaxRequest() {
+        // var apiKey = process.env.REACT_APP_API_KEY;
         let xhr = new XMLHttpRequest();
         xhr.addEventListener("load", reqListener);
-        xhr.open('GET', 'https://trnieloms.azure-api.net/inventory/dependency');
-        xhr.setRequestHeader('Ocp-Apim-Subscription-Key', '<APIM_LEY>');
+        xhr.open('GET', requestUrl);
+        xhr.setRequestHeader('Ocp-Apim-Subscription-Key', apiKey);
         xhr.send();
     }
 
     async function fetchRequest() {
-        let response = await fetch('https://trnieloms.azure-api.net/inventory/dependency', {
+        // var apiKey = process.env.REACT_APP_API_KEY;
+        let response = await fetch(requestUrl, {
             headers: {
-                'Ocp-Apim-Subscription-Key': '<APIM_KEY>'
+                'Ocp-Apim-Subscription-Key': apiKey
             }
         });
 
@@ -76,7 +80,7 @@ const App = () => {
 
     return (
       <BrowserRouter>
-        <TelemetryProvider instrumentationKey="<APPINSIGHTS_KEY_HERE>" after={() => { appInsights = getAppInsights() }}>
+        <TelemetryProvider instrumentationKey={apiKey} after={() => { appInsights = getAppInsights() }}>
           <div >
             <Header />
             <Route exact path="/" component={Home} />
