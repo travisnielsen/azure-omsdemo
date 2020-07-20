@@ -59,16 +59,16 @@ const App = () => {
       }
 
     function ajaxRequest() {
-        // var apiKey = process.env.REACT_APP_API_KEY;
         let xhr = new XMLHttpRequest();
         xhr.addEventListener("load", reqListener);
-        xhr.open('GET', requestUrl);
+        xhr.open('POST', requestUrl);
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhr.setRequestHeader('Ocp-Apim-Subscription-Key', apiKey);
-        xhr.send();
+        xhr.send(JSON.stringify({ "id": "order123", "itemName": "trashcans", "itemQuantity": 100, "customerId": "joe" }));
+        // xhr.send();
     }
 
     async function fetchRequest() {
-        // var apiKey = process.env.REACT_APP_API_KEY;
         let response = await fetch(requestUrl, {
             headers: {
                 'Ocp-Apim-Subscription-Key': apiKey
