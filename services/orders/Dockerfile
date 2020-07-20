@@ -21,5 +21,5 @@ EXPOSE 8080
 
 # ENTRYPOINT ["/scripts/startup.sh"]
 
-# Assume 512MB RAM allocated to container. See: https://github.com/dsyer/spring-boot-memory-blog/blob/main/cf.md
+# Assume 512MB RAM request limit allocated to container. See: https://github.com/dsyer/spring-boot-memory-blog/blob/main/cf.md
 ENTRYPOINT ["java", "-javaagent:/usr/share/inventory/applicationinsights-agent.jar", "-jar", "/usr/share/inventory/service.jar", "-Xmx382293K", "-XX:MaxMetaspaceSize=64M", "-Xss995K"]

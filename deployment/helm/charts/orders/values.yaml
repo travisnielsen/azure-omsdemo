@@ -7,11 +7,11 @@ replicaCount: 2
 image:
   repository: trniel/order-service
   
-  # typically: IfNotPresent
-  pullPolicy: Always
+  # can set to Always
+  pullPolicy: IfNotPresent
   
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.0.1-SNAPSHOT"
+  tag: "0.0.2-SNAPSHOT"
 
 imagePullSecrets: []
 nameOverride: "order-service"
@@ -56,16 +56,16 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-resources: {}
+resources:
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   limits:
-    cpu: 500m
-    memory: 576Mi
+    cpu: 1
+    memory: 640Mi
   requests:
-    cpu: 250m
+    cpu: 500m
     memory: 512Mi
 
 autoscaling:
