@@ -1,16 +1,4 @@
----
-page_type: sample
-languages:
-- javascript
-- html
-products:
-- azure
-description: "Microsoft Application Insights JavaScript SDK Sample"
-urlFragment: application-insights-react-demo
----
-
 # Microsoft Application Insights JavaScript SDK Sample
-[![Build Status](https://travis-ci.org/Azure-Samples/application-insights-react-demo.svg?branch=master)](https://travis-ci.org/Azure-Samples/application-insights-react-demo)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 > *Note:* Only [**App.jsx**](./src/App.jsx) was modified in this repo for the **Application Insights Demo**

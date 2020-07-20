@@ -21,6 +21,11 @@
             "projectName": "orders",
             "cwd": "${workspaceFolder}",
             "args": "--javaagent:${workspaceFolder}/services/orders/applicationinsights-agent-3.0.0-PREVIEW.5.jar"
+        },
+        {
+            "name": "Local Process with Kubernetes (Preview)",
+            "type": "dev-spaces-connect-configuration",
+            "request": "launch"
         }
     ]
 }
