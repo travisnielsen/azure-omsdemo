@@ -15,29 +15,34 @@
 
 LAYOUT_LEFT_RIGHT
 
-title Overview
+title Application Overview
 
 Entity user
 
 ' AzureActiveDirectory(aad, "OAuth", "API scopes and authorizations")
+
+Container(web, "Web Client", "ReactJS 16.13.x", "User identity and interface")
+
 AzureAPIManagement(apim, "API gateway", "Managed Identity / Client Certificate", "Validate OAuth tokens and perform access control checks.")
-AzureFunction(ordersvc, "Orders", "Premium-v2 (Linux) JRE11 - Spring Boot", "")
-AzureWebApp(inventorysvc, "Inventory", "Premium-v2 (Linux) JRE11 - Spring Boot", "")
+Container(ordersvc, "Order Service", "JRE11 - Spring Boot 2.3.x", "Create and read orders. Process fulfillment stautus")
+Container(inventorysvc, "Inventory Service", "JRE11 - Spring Boot 2.3.x", "")
 AzureFunction(deliverysvc, "Delivery", "NodeJS 12.13.1", "")
 
 AzureEventHub(eh, "Fulfillment stream", "")
-AzureServiceBus(sb, "", "topics: orders, fulfillment")
+AzureServiceBus(sb, "Message broker", "Standard SKU", "topics: orders, fulfillment")
 
-AzureCosmosDb(orderdb, "Order state", "", "Order with current aggregate status")
+AzureCosmosDb(orderdb, "Orders", "400 RUs (autoscale to 4000)", "Order with current aggregate status")
 
-Rel(user, apim, "Create order")
+Rel(web, apim, "Create order")
 Rel(apim, ordersvc, "Create order" )
-Rel(ordersvc, inventorysvc, "Check inventory")
+Rel(ordersvc, inventorysvc, "Check / reserve inventory")
 Rel(ordersvc, sb, "Create order")
 Rel(ordersvc, orderdb, "Updates order state")
 Rel_Back(inventorysvc, sb, "Receive order")
 Rel_Back(deliverysvc, sb, "Receive order")
 Rel(eh, deliverysvc, "fulfillment stream")
+
+user -> web
 
 deliverysvc --> sb : "Fulfillment update event"
 ordersvc <-- sb : "Get fulfillment updates"
