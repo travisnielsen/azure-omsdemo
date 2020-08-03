@@ -91,7 +91,7 @@ const App = () => {
             <button onClick={trackEvent}>Track Event</button>
             <button onClick={trackTrace}>Track Trace</button>
             <button onClick={throwError}>Autocollect an Error</button>
-            <button onClick={ajaxRequest}>Autocollect a Dependency (XMLHttpRequest)</button>
+            <button onClick={ajaxRequest}>Create Order (XMLHttpRequest)</button>
             <button onClick={fetchRequest}>Autocollect a dependency (Fetch)</button>
           </div>
         </TelemetryProvider>
