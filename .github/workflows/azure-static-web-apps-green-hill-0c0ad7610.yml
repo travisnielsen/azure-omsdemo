@@ -41,7 +41,7 @@ jobs:
 
       - shell: bash
         run: |
-          cat .env
+          cat web/.env
 
       - name: Build And Deploy
         id: builddeploy
