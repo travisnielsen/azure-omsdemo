@@ -65,6 +65,22 @@ public class OrderController {
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     public String createOrder(@RequestBody Order order) throws Exception {
+
+        String statusUrl = System.getenv("STATUS_URL");
+
+        if (statusUrl != null) {
+
+            LOGGER.info("calling status URL");
+
+            // Test dependency
+            HttpGet httpGet = new HttpGet(statusUrl);
+            int status;
+            try (CloseableHttpResponse response = closeableHttpClient.execute(httpGet)) {
+                status = response.getStatusLine().getStatusCode();
+                LOGGER.info("Status URL response: " + status);
+            }
+
+        }
         
         // Cosmos DB
         final Mono<Order> saveOrderMono = repository.save(order);

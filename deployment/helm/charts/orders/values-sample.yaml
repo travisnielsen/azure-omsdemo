@@ -11,7 +11,7 @@ image:
   pullPolicy: IfNotPresent
   
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.0.2-SNAPSHOT"
+  tag: "0.0.3"
 
 imagePullSecrets: []
 nameOverride: "order-service"
@@ -71,7 +71,7 @@ resources:
 autoscaling:
   enabled: false
   minReplicas: 2
-  maxReplicas: 100
+  maxReplicas: 4
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
@@ -80,3 +80,5 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+statusUrl: [https://[your-function-app-name].azurewebsites.net/api/getstatus?code=[your-authorization-code]

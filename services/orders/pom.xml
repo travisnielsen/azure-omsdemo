@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.fabrikam</groupId>
 	<artifactId>orders</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.3</version>
 	<name>order-service</name>
 	<description>Sample order service in Spring Boot</description>
 
@@ -109,7 +109,7 @@
                         <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
                     </buildArgs>
                 </configuration>
-            </plugin>
+			</plugin>
 
 		</plugins>
 	</build>

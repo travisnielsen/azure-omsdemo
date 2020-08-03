@@ -16,5 +16,5 @@
       "name": "res"
     }
   ],
-  "scriptFile": "../dist/CreateGetOrders/index.js"
+  "scriptFile": "../dist/getstatus/index.js"
 }
