@@ -6,9 +6,11 @@ This sample application was bootstrapped with [Create React App](https://github.
 
 TBD
 
-## Configuration
+## Local Development and Testing
 
-Create a `.env` file at the project root and set the following values to match your environment:
+### Configuration
+
+Create a `.env.local` file at the project root and set the following values to match your environment:
 
 ```bash
 REACT_APP_APPINSIGHTS_KEY=[your_application_insights_key]
@@ -16,7 +18,7 @@ REACT_APP_API_KEY=[your_api_management_subscription_key]
 REACT_APP_REQUEST_URL=[url_to_orders_api_exposed_in_apim]
 ```
 
-## Build and Start
+### Build and Start
 
 In the project directory, you can run:
 
@@ -34,4 +36,5 @@ The build is minified and the filenames include the hashes. Your app is ready to
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-## Send Test Data
+## Deployment
+

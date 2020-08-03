@@ -15,9 +15,27 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
+
       - uses: actions/checkout@v2
         with:
           submodules: true
+      
+      - shell: bash
+        env:
+          APPINSIGHTS_KEY: ${{ secrets.APPINSIGHTS_KEY }}
+        run: |
+          sed -i "s/\(REACT_APP_APPINSIGHTS_KEY *= *\).*/\1$APP_INSIGHTS_KEY/" .env
+
+      - shell: bash
+        env:
+          API_KEY: ${{ secrets.API_KEY }}
+        run: |
+          sed -i "s/\(REACT_APP_API_KEY *= *\).*/\1$API_KEY/" .env
+
+      - shell: bash
+        run: |
+          cat .env
+
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v0.0.1-preview
