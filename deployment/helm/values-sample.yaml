@@ -1,0 +1,15 @@
+# CREATE A NEW FILE NAMED values.yaml AND COPY THE BELOW YAML INTO IT
+# MODIFY ALL VALUES TO MATCH YOUR ENVIRONMENT
+
+# Default values for social-network.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+nginx-ingress:
+  fullnameOverride: "nginx-ingress"
+
+inventory:
+  fullnameOverride: "inventory-service"
+
+orders:
+  fullnameOverride: "order-service"
