@@ -19,12 +19,14 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
         console.log("application has msi endpoint");
 
         const clientId = process.env.CLIENT_ID_MSI;
-
-        // authenticate wth MSI
+        
         const options: msRestNodeAuth.MSIAppServiceOptions = {
-            clientId: clientId
+            clientId: clientId,
+            resource: "https://servicebus.azure.net/"
         }
+        
         tokenCreds = await msRestNodeAuth.loginWithAppServiceMSI(options);
+
     } else {
 
         console.log("no msi endpoint - using service principal");
@@ -35,6 +37,8 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
 
         tokenCreds = await msRestNodeAuth.loginWithServicePrincipalSecret(clientId, clientSecret, tenantId, {
             tokenAudience: "https://servicebus.azure.net/" });
+        
+        context.log.info(tokenCreds);
     }
 
     console.log(`Creating client for: ${serviceBusEndpoint} for topic ${topicName}`);
