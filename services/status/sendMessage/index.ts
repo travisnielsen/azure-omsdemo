@@ -37,6 +37,8 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
             tokenAudience: "https://servicebus.azure.net/" });
     }
 
+    console.log(`Creating client for: ${serviceBusEndpoint} for topic ${topicName}`);
+
     // Set up Service Bus connection
     const sbClient = ServiceBusClient.createFromAadTokenCredentials(serviceBusEndpoint, tokenCreds);
     const queueClient = sbClient.createTopicClient(topicName);
@@ -51,7 +53,14 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
         console.log(`Sending message: ${message.body} - ${message.label}`);
         await sender.send(message);
         await queueClient.close();
-    } finally {
+    } catch (e) {
+        console.log(e);
+        context.res = {
+            body: e,
+            status: 500
+        };
+    }
+    finally {
         await sbClient.close();
     }
 
