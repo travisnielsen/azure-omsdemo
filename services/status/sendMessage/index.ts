@@ -21,7 +21,6 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
         const clientId = process.env.CLIENT_ID_MSI;
         
         const options: msRestNodeAuth.MSIAppServiceOptions = {
-            clientId: clientId,
             resource: "https://servicebus.azure.net/"
         }
         
@@ -31,7 +30,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
 
         console.log("no msi endpoint - using service principal");
 
-        const clientId = process.env.CLIENT_ID_SP;
+        const clientId = process.env.CLIENT_ID;
         const tenantId = process.env.TENANT_ID;
         const clientSecret = process.env.CLIENT_SECRET;
 
