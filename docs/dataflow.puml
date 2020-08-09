@@ -1,16 +1,14 @@
 @startuml overview
-!define AzurePuml https://raw.githubusercontent.com/RicardoNiepel/Azure-PlantUML/release/2-1/dist
+!define AzurePuml https://raw.githubusercontent.com/travisnielsen/Azure-PlantUML/archcntr-icons/dist
 !includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
 !includeurl AzurePuml/AzureCommon.puml
 !includeurl AzurePuml/Identity/AzureActiveDirectory.puml
-!includeurl AzurePuml/Web/AzureAPIManagement.puml
-!includeurl AzurePuml/Web/AzureWebApp.puml
-!includeurl AzurePuml/Compute/AzureAppService.puml
-!includeurl AzurePuml/Compute/AzureFunction.puml
-!includeurl AzurePuml/Integration/AzureServiceBus.puml
-!includeurl AzurePuml/Analytics/AzureEventHub.puml
+!includeurl AzurePuml/AppServices/APIManagementServices.puml
+!includeurl AzurePuml/Compute/AppServices.puml
+!includeurl AzurePuml/Compute/FunctionApps.puml
+!includeurl AzurePuml/Integration/ServiceBus.puml
+!includeurl AzurePuml/Analytics/EventHubs.puml
 !includeurl AzurePuml/Databases/AzureCosmosDb.puml
-!includeurl AzurePuml/DevOps/AzureApplicationInsights.puml
 
 
 LAYOUT_LEFT_RIGHT
@@ -23,15 +21,15 @@ Entity user
 
 Container(web, "Web Client", "ReactJS 16.13.x", "User identity and interface")
 
-AzureAPIManagement(apim, "API gateway", "Managed Identity / Client Certificate", "Validate OAuth tokens and perform access control checks.")
+APIManagementServices(apim, "API gateway", "Managed Identity / Client Certificate", "Validate OAuth tokens and perform access control checks.")
 Container(ordersvc, "Order Service", "JRE11 - Spring Boot 2.3.x", "Create and read orders. Process fulfillment stautus")
 Container(inventorysvc, "Inventory Service", "JRE11 - Spring Boot 2.3.x", "")
-AzureFunction(deliverysvc, "Delivery", "NodeJS 12.13.1", "")
+FunctionApps(deliverysvc, "Delivery", "NodeJS 12.13.1", "")
 
-AzureEventHub(eh, "Fulfillment stream", "")
-AzureServiceBus(sb, "Message broker", "Standard SKU", "topics: orders, fulfillment")
+EventHubs(eh, "Fulfillment stream", "")
+ServiceBus(sb, "Message broker", "Standard SKU", "topics: orders, fulfillment")
 
-AzureCosmosDb(orderdb, "Orders", "400 RUs (autoscale to 4000)", "Order with current aggregate status")
+AzureCosmosDB(orderdb, "Orders", "400 RUs (autoscale to 4000)", "Order with current aggregate status")
 
 Rel(web, apim, "Create order")
 Rel(apim, ordersvc, "Create order" )
