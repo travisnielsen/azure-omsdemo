@@ -3,11 +3,11 @@
 !includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
 !includeurl AzurePuml/AzureCommon.puml
 !includeurl AzurePuml/Identity/AzureActiveDirectory.puml
-!includeurl AzurePuml/AppServices/APIManagementServices.puml
-!includeurl AzurePuml/Compute/AppServices.puml
+!includeurl AzurePuml/Compute/APIManagementServices.puml
+!includeurl AzurePuml/Compute/WebApp.puml
 !includeurl AzurePuml/Compute/FunctionApps.puml
 !includeurl AzurePuml/Integration/ServiceBus.puml
-!includeurl AzurePuml/Analytics/EventHubs.puml
+!includeurl AzurePuml/Integration/EventHubs.puml
 !includeurl AzurePuml/Databases/AzureCosmosDb.puml
 
 
