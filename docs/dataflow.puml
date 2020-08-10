@@ -1,5 +1,5 @@
 @startuml overview
-!define AzurePuml https://raw.githubusercontent.com/travisnielsen/Azure-PlantUML/archcntr-icons/dist
+!define AzurePuml https://raw.githubusercontent.com/travisnielsen/Azure-PlantUML/release/3-0/dist
 !includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
 !includeurl AzurePuml/AzureCommon.puml
 !includeurl AzurePuml/Identity/AzureActiveDirectory.puml
