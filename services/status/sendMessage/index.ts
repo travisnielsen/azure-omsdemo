@@ -17,7 +17,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     var tokenCreds;
 
     if (msiEndpoint) {
-        console.log("application has msi endpoint");
+        console.log("application has msi endpoint. Key Vault Reference value is: " + testSecret);
 
         const clientId = process.env.CLIENT_ID_MSI;
         
@@ -26,8 +26,6 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
         }
         
         tokenCreds = await msRestNodeAuth.loginWithAppServiceMSI(options);
-
-        context.log.info(`System Managed Identity. Key Vault Reference value is: ${testSecret}`);
 
     } else {
 
