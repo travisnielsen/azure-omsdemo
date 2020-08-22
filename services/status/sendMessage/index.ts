@@ -1,3 +1,4 @@
+import * as appInsights from "applicationinsights"
 import { AzureFunction, Context, HttpRequest } from "@azure/functions"
 import { ServiceBusClient, SendableMessageInfo } from "@azure/service-bus";
 import * as msRestNodeAuth from "@azure/ms-rest-nodeauth";
@@ -5,6 +6,16 @@ import * as msRestNodeAuth from "@azure/ms-rest-nodeauth";
 // Load the .env file if it exists
 import * as dotenv from "dotenv";
 dotenv.config();
+
+const appInsightsKey = process.env.APPINSIGHTS_INSTRUMENTATIONKEY;
+
+if (appInsightsKey) {
+    console.log("App Insights key found. Initializing.")
+    appInsights
+        .setup(appInsightsKey)
+        .setDistributedTracingMode(appInsights.DistributedTracingModes.AI_AND_W3C)
+        .start();
+}
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
 
