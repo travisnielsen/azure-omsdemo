@@ -8,13 +8,16 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 const appInsightsKey = process.env.APPINSIGHTS_INSTRUMENTATIONKEY;
+const cloudRoleName = process.env.CLOUDROLE_NAME;
 
 if (appInsightsKey) {
     console.log("App Insights key found. Initializing.")
     appInsights
         .setup(appInsightsKey)
-        .setDistributedTracingMode(appInsights.DistributedTracingModes.AI_AND_W3C)
-        .start();
+        .setDistributedTracingMode(appInsights.DistributedTracingModes.AI_AND_W3C);
+    appInsights.start();
+    appInsights.defaultClient.context.tags[appInsights.defaultClient.context.keys.cloudRole] = cloudRoleName;
+    appInsights.defaultClient.context.tags["ai.cloud.role"] = cloudRoleName;
 }
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {

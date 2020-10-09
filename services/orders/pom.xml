@@ -16,7 +16,7 @@
 
 	<properties>
 		<java.version>11</java.version>
-		<azure.version>2.3.1</azure.version>
+		<azure.version>2.3.5</azure.version>
 		<docker.user>trniel</docker.user>
 	</properties>
 

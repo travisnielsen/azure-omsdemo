@@ -23,9 +23,12 @@
             "args": "--javaagent:${workspaceFolder}/services/orders/applicationinsights-agent-3.0.0-PREVIEW.5.jar"
         },
         {
-            "name": "Local Process with Kubernetes (Preview)",
-            "type": "dev-spaces-connect-configuration",
-            "request": "launch"
+            "type": "node",
+            "request": "attach",
+            "name": "Debug - status",
+            "cwd": "${workspaceFolder}/status",
+            "preLaunchTask": "func: host start",
+            "port": 9229
         }
     ]
 }

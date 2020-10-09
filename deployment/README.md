@@ -17,3 +17,9 @@ Next, from the root directory use the Helm chart provided in this repo to deploy
 ```bash
 helm install fabrikam-oms deployment/helm --namespace fabrikam
 ```
+
+To upgrade an existing installation, run the following command from the `deployments/helm` folder:
+
+```bash
+helm upgrade fabrikam-oms . --namespace fabrikam
+```
