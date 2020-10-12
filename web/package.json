@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@microsoft/applicationinsights-react-js": "^3.0.0",
-    "@microsoft/applicationinsights-web": "^2.5.5",
+    "@microsoft/applicationinsights-react-js": "^3.0.4",
+    "@microsoft/applicationinsights-web": "^2.5.9",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^3.4.1"
+    "react-scripts": "^3.4.3"
   },
   "scripts": {
     "start": "react-scripts start",
