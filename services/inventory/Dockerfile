@@ -17,7 +17,7 @@ COPY target/${JAR_FILE} /usr/share/inventory/service.jar
 
 # Expose the API and SSH
 # EXPOSE 8080/tcp 2222
-EXPOSE 8081/tcp
+EXPOSE 8080/tcp
 
 # ENTRYPOINT ["/scripts/startup.sh"]
 ENTRYPOINT ["java", "-javaagent:/usr/share/inventory/applicationinsights-agent.jar", "-jar", "/usr/share/inventory/service.jar"]
