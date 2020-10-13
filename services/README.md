@@ -17,19 +17,17 @@ Furthermore, you must have an Application Insights instance created with the ser
 
 ## Status Service (NodeJS)
 
-
-
 ## Inventory and Orders Services (Java Spring Boot)
 
 These services are deployed to Azure Kubernetes Service (AKS) and require some configuration to match your environment.
 
 ### Configuration Files (inventory and orders)
 
-Before building and deploying these services, the following configuration files must be created. For each file, replace `[AI_KEY]` with the key for your Application Insights instance. Replace each instance of `[servicename]` with the actual name of the service (i.e. `inventory` or `orders`).
+Before building and deploying these services, the following configuration files must be created and updated. For each file, replace `[AI_KEY]` with the key for your Application Insights instance. Also, any value tokenized as `[UPDATE]` must be replaced with actual values that match your environment.
 
-#### ApplicationInsights.json
+#### ApplicationInsights.json (both services)
 
-Directory: `services/[servicename]`
+Directories: `services/inventory`, `services/orders`
 
 ```json
 {
@@ -47,58 +45,38 @@ Directory: `services/[servicename]`
 }
 ```
 
-#### application.properties
+#### application.properties (Inventory)
 
-Directory: `services/[servicename]/src/main/resources`
+Directory: `services/inventory/src/main/resources`
 
 ```bash
-azure.application-insights.enabled=true
-
-## Application Insights Instrumentation Key
-azure.application-insights.instrumentation-key=[AI_KEY]
-
-## This enables trace level SDK debugging
-azure.application-insights.logger.level=trace
-
 ## This is needed for app map to show the service name
-spring.application.name=fabrkiam-inventory
+spring.application.name=inventory-service
 
-## Azure Monitor for metrics
-management.metrics.export.azuremonitor.instrumentation-key=[AI_KEY]
+spring.jms.servicebus.connection-string=Endpoint=sb://[UPDATE].servicebus.windows.net/;SharedAccessKeyName=order-receiver;SharedAccessKey=[UPDATE];EntityPath=orders
+spring.jms.servicebus.topic-client-id=[UPDATE]
+spring.jms.servicebus.idle-timeout=1800000
 ```
 
-#### logback.xml
+#### application.properties (Orders)
 
-Directory: `services/[servicename]/src/main/resources`
+Directory: `services/orders/src/main/resources`
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<configuration>
-  <include resource="org/springframework/boot/logging/logback/base.xml"/>
+```bash
+## This is needed for app map to show the service name
+spring.application.name=order-service
 
-  <appender name="aiAppender" class="com.microsoft.applicationinsights.logback.ApplicationInsightsAppender">
-    <instrumentationKey>[AI_KEY]</instrumentationKey>
-  </appender>
-  
-  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-    <encoder>
-      <pattern>
-        %d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger{36}.%M - %msg%n
-      </pattern>
-    </encoder>
-  </appender>
+# COSMOS DB
+# Specify the DNS URI of your Azure Cosmos DB.
+azure.cosmosdb.uri=https://[UPDATE].documents.azure.com:443/
+# Specify the access key for your database.
+azure.cosmosdb.key=[UPDATE]
+# Specify the name of your database.
+azure.cosmosdb.database=orders
 
-  <root level="info">
-    <appender-ref ref="aiAppender" />
-    <appender-ref ref="STDOUT" />
-  </root>
-  
-  <logger name="com.fabrikam.[servicename].controller" level="trace" additivity="false">
-      <appender-ref ref="aiAppender" />
-      <appender-ref ref="STDOUT" />
-  </logger>
-
-</configuration>
+# SERVICE BUS TOPIC
+spring.jms.servicebus.connection-string=Endpoint=sb://[UPDATE].servicebus.windows.net/;SharedAccessKeyName=order-producer;SharedAccessKey=[UPDATE];EntityPath=orders
+spring.jms.servicebus.idle-timeout=1800000
 ```
 
 ### Build and Run
@@ -133,16 +111,4 @@ Finally, push the images for both the Inventory and Orders to Docker Hub via [do
 
 ### Deploy workload to AKS
 
-Both services are deployed to AKS via the provided Helm charts. For demonstration and testing purposes, the Orders service is exposed via an Nginx ingress controller. Prior to deployment, make sure the `values.yaml` files for both `orders` and `inventory` match your environment details, such as image names (and tags), as well as the URL for the Status function app. These files can be found in the `deployment\helm\charts\inventory` and `deployment\helm\charts\orders` directories respectively. Once these files are confirmed for correctness, navigate to the `helm` directory and deploy via the following command:
-
-> This applicaiton sample assumes the workload is deployed into a dedicated namespace called 'fabrikam'. Ensure this namespace exists in your AKS cluster. If you chose to deploy to a different namespace, change the following commands accordingly.
-
-```bash
-helm install -n fabrikam fabrikam-oms .
-```
-
-Use the following command to update the existing deployment:
-
-```bash
-helm upgrade -n fabrikam fabrikam-oms .
-```
+See detailed instructions for deploying these services to your AKS environment [here](../deployment/README.MD).

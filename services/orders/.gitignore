@@ -75,7 +75,6 @@ secrets.yml
 *.azureauth
 application.properties
 ApplicationInsights.json
-logback.xml
 
 # Application Insights Agent
-!applicationinsights-agent-3.0.0-PREVIEW.5.jar
+!applicationinsights-agent-3.0.0-PREVIEW.7.jar

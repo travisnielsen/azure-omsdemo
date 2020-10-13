@@ -5,12 +5,12 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.1.RELEASE</version>
+		<version>2.3.4.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.fabrikam</groupId>
 	<artifactId>orders</artifactId>
-	<version>0.0.3</version>
+	<version>0.0.4</version>
 	<name>order-service</name>
 	<description>Sample order service in Spring Boot</description>
 
@@ -55,11 +55,10 @@
 			</exclusions>
 		</dependency>
 
-		<!-- App Insights - additional features beyond codeless monitoring -->
 		<dependency>
-			<groupId>com.microsoft.azure</groupId>
-			<artifactId>applicationinsights-spring-boot-starter</artifactId>
-			<version>2.6.1</version>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.13</version>
 		</dependency>
 
 		<!-- Metrics -->

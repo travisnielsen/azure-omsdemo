@@ -11,6 +11,7 @@ import java.io.Serializable;
  */
 public abstract class DomainEvent<T, ID> implements Serializable {
 
+    private static final long serialVersionUID = 4622845870997333571L;
     private ID id;
     private Long createdAt;
     private Long lastModified;

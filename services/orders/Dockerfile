@@ -1,7 +1,7 @@
 FROM openjdk:11.0.1-jre-slim
 
 # Add App Insights Java Agent
-COPY applicationinsights-agent-3.0.0-PREVIEW.5.jar /usr/share/orders/applicationinsights-agent.jar
+COPY applicationinsights-agent-3.0.0-PREVIEW.7.jar /usr/share/orders/applicationinsights-agent.jar
 COPY ApplicationInsights.json /usr/share/orders/ApplicationInsights.json
 
 # Configure SSH for App Service

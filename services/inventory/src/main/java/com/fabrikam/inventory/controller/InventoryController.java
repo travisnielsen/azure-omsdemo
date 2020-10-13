@@ -1,10 +1,5 @@
 package com.fabrikam.inventory.controller;
 
-import com.microsoft.applicationinsights.TelemetryClient;
-import com.microsoft.applicationinsights.telemetry.EventTelemetry;
-import com.microsoft.applicationinsights.telemetry.RemoteDependencyTelemetry;
-import com.microsoft.applicationinsights.telemetry.Telemetry;
-
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -21,13 +16,8 @@ import org.slf4j.LoggerFactory;
 public class InventoryController {
 
     private CloseableHttpClient closeableHttpClient = HttpClients.createDefault();
-    private TelemetryClient telemetryClient;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(InventoryController.class);
-
-    public InventoryController(TelemetryClient client) {
-        this.telemetryClient = client;
-    }
 
     @GetMapping("/")
     public int root() {
@@ -44,13 +34,6 @@ public class InventoryController {
         return status;
     }
 
-    @GetMapping("/event")
-    public String trackEvent() {
-        EventTelemetry telemetry = new EventTelemetry("Some event occurred");
-        telemetryClient.trackEvent(telemetry);
-        return "Created EVENT item";
-    }
-
     @GetMapping("/exception")
     public Integer trackException() throws Exception {
         Integer result = 1 / 0;
@@ -60,7 +43,6 @@ public class InventoryController {
     @GetMapping("/logexception")
     public String trackHandledException() throws Exception {
         Exception e = new Exception("Test exception");
-        telemetryClient.trackException(e);
         return "Exception message sent";
     }
 

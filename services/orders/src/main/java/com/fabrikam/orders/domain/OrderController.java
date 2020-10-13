@@ -1,8 +1,5 @@
 package com.fabrikam.orders.domain;
 
-import com.microsoft.applicationinsights.TelemetryClient;
-import com.microsoft.applicationinsights.telemetry.EventTelemetry;
-
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -38,15 +35,10 @@ public class OrderController {
     private JmsTemplate jmsTemplate;
 
     private CloseableHttpClient closeableHttpClient = HttpClients.createDefault();
-    private TelemetryClient telemetryClient;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderController.class);
 
     private static final String DESTINATION_NAME = "orders";
-
-    public OrderController(TelemetryClient client) {
-        this.telemetryClient = client;
-    }
 
     @GetMapping("/")
     public int root() {
@@ -108,13 +100,6 @@ public class OrderController {
         return status;
     }
 
-    @GetMapping("/event")
-    public String trackEvent() {
-        EventTelemetry telemetry = new EventTelemetry("Some event occurred");
-        telemetryClient.trackEvent(telemetry);
-        return "Created EVENT item";
-    }
-
     @GetMapping("/exception")
     public Integer trackException() throws Exception {
         Integer result = 1 / 0;
@@ -124,7 +109,6 @@ public class OrderController {
     @GetMapping("/logexception")
     public String trackHandledException() throws Exception {
         Exception e = new Exception("Test exception");
-        telemetryClient.trackException(e);
         return "Exception message sent";
     }
 
