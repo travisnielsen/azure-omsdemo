@@ -1,9 +1,10 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions"
-import * as appInsights from "applicationinsights"
+// import * as appInsights from "applicationinsights"
 
 const appInsightsKey = process.env.APPINSIGHTS_INSTRUMENTATIONKEY;
 const cloudRoleName = process.env.CLOUDROLE_NAME;
 
+/*
 if (appInsightsKey) {
     console.log("App Insights key found. Initializing.")
     appInsights
@@ -14,6 +15,7 @@ if (appInsightsKey) {
     appInsights.defaultClient.context.tags["ai.cloud.role"] = cloudRoleName;
     // appInsights.defaultClient.context.tags["ai.cloud.roleInstance"] = "your role instance";
 }
+*/
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
 
