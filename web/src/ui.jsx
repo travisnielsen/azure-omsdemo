@@ -1,16 +1,30 @@
 import React from "react";
-import Navbar from "react-bootstrap/Navbar";
+import { Navbar, Nav } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import DropdownButton from "react-bootstrap/DropdownButton";
-import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from "@azure/msal-react";
+import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal, useIsAuthenticated } from "@azure/msal-react";
 import { loginRequest } from "./authConfig";
 import Dropdown from "react-bootstrap/esm/Dropdown";
+import { BrowserRouter, Route } from 'react-router-dom';
+import { LinkContainer } from 'react-router-bootstrap'
+import "./styles/App.css";
+import About from "./components/about"
+import Home from "./components/home"
+
+// import {SeverityLevel} from '@microsoft/applicationinsights-web';
+import { getAppInsights } from './TelemetryService';
+import TelemetryProvider from './telemetry-provider';
 
 const SignInSignOutButton = () => {
-    const { instance } = useMsal();
+    const { instance, accounts } = useMsal();
+    const isAuthenticated = useIsAuthenticated();
     return (
         <>
             <AuthenticatedTemplate>
+                <div className="nav-link">
+                    {isAuthenticated && ( accounts[0].name )}
+                    {!isAuthenticated && ( <p>No users are signed in!</p> )}
+                </div>
                 <Button variant="secondary" onClick={() => instance.logout()} className="ml-auto">Sign Out</Button>
             </AuthenticatedTemplate>
             <UnauthenticatedTemplate>
@@ -22,17 +36,37 @@ const SignInSignOutButton = () => {
         </>
     );
 };
+
+
 export const PageLayout = (props) => {
+
+    let appInsights = null;
+    let apiKey = process.env.REACT_APP_API_KEY;
+
     return (
         <>
-            <Navbar bg="primary" variant="dark">
-                <a className="navbar-brand" href="/">Fabrikam</a>
-                <SignInSignOutButton/>
-            </Navbar>
-            <h5><center></center></h5>
-            <br/>
-            <br/>
-            {props.children}
+            <BrowserRouter>
+                <TelemetryProvider instrumentationKey={apiKey} after={() => { appInsights = getAppInsights() }}>
+                    <Route exact path="/" component={Home} />
+                    <Route path="/about" component={About} />
+                    <Navbar bg="primary" variant="dark" fixed="top">
+                        <Navbar.Brand href="/">Fabrikam</Navbar.Brand>
+                        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                        <Navbar.Collapse id="basic-navbar-nav">
+                            <Nav className="mr-auto">
+                                <LinkContainer to="/about">
+                                    <Nav.Link>About</Nav.Link>
+                                </LinkContainer>
+                            </Nav>
+                        </Navbar.Collapse>
+                        <SignInSignOutButton/>
+                    </Navbar>
+                    <h5><center></center></h5>
+                    <br/>
+                    <br/>
+                    {props.children}
+                </TelemetryProvider>
+            </BrowserRouter>
         </>
     );
 };

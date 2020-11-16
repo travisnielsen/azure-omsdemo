@@ -5,16 +5,14 @@ metadata:
     controller-gen.kubebuilder.io/version: v0.2.5
   creationTimestamp: null
   name: aplogconfs.appprotect.f5.com
-  labels:
-    app.kubernetes.io/name: "nginx-ingress"
 spec:
-  preserveUnknownFields: false
   group: appprotect.f5.com
   names:
     kind: APLogConf
     listKind: APLogConfList
     plural: aplogconfs
     singular: aplogconf
+  preserveUnknownFields: false
   scope: Namespaced
   validation:
     openAPIV3Schema:

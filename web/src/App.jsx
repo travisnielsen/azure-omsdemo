@@ -1,93 +1,22 @@
-import React, { useState } from 'react';
-import {BrowserRouter, Link, Route} from 'react-router-dom';
+import React from 'react';
+// import {BrowserRouter, Link, Route} from 'react-router-dom';
 
-import { MsalProvider, AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from "@azure/msal-react";
+import { MsalProvider } from "@azure/msal-react";
 import { PublicClientApplication } from "@azure/msal-browser";
-import { msalConfig, loginRequest } from "./authConfig";
+import { msalConfig } from "./authConfig";
 import { PageLayout } from "./ui.jsx";
-import { ProfileData, callMsGraph } from "./graph.jsx";
-import Button from "react-bootstrap/Button";
 import "./styles/App.css";
-
-import {SeverityLevel} from '@microsoft/applicationinsights-web';
-import { getAppInsights } from './TelemetryService';
-import TelemetryProvider from './telemetry-provider';
-
-
-const ProfileContent = () => {
-    const { instance, accounts } = useMsal();
-    const [graphData, setGraphData] = useState(null);
-
-    function RequestProfileData() {
-        instance.acquireTokenSilent({
-            ...loginRequest,
-            account: accounts[0]
-        }).then((response) => {
-            callMsGraph(response.accessToken).then(response => setGraphData(response));
-        });
-    }
-
-    return (
-        <>
-            <h5 className="card-title">Welcome {accounts[0].name}</h5>
-            {graphData ? 
-                <ProfileData graphData={graphData} />
-                :
-                <Button variant="secondary" onClick={RequestProfileData}>Request Profile Information</Button>
-            }
-        </>
-    );
-};
-
-const MainContent = () => {    
-    return (
-        <div className="App">
-            <AuthenticatedTemplate>
-                <ProfileContent />
-            </AuthenticatedTemplate>
-            <UnauthenticatedTemplate>
-                <h5 className="card-title">Please sign-in to see your profile information.</h5>
-            </UnauthenticatedTemplate>
-        </div>
-    );
-};
-
 
 export default function App() {
     const msalInstance = new PublicClientApplication(msalConfig);
     return (
         <MsalProvider instance={msalInstance}>
-            <PageLayout>
-                <MainContent />
-            </PageLayout>
+            <PageLayout />
         </MsalProvider>
     );
 }
 
 /*
-
-const Home = () => (
-    <div>
-        <h2>Home Page</h2>
-    </div>
-);
-
-const About = () => (
-    <div>
-        <h2>About Page</h2>
-    </div>
-);
-
-const Header = () => (
-    <ul>
-        <li>
-            <Link to="/">Home</Link>
-        </li>
-        <li>
-            <Link to="/about">About</Link>
-        </li>
-    </ul>
-);
 
 const App = () => {
     let appInsights = null;

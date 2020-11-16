@@ -1,6 +1,6 @@
 {{- if .Values.rbac.create }}
 kind: ClusterRole
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: {{ include "nginx-ingress.name" . }}
   labels:
@@ -62,16 +62,22 @@ rules:
   - patch
   - list
 - apiGroups:
-  - extensions
+  - networking.k8s.io
   resources:
   - ingresses
   verbs:
   - get
   - list
   - watch
+- apiGroups:
+  - networking.k8s.io
+  resources:
+  - ingressclasses
+  verbs:
+  - get
 {{- if .Values.controller.reportIngressStatus.enable }}
 - apiGroups:
-  - extensions
+  - networking.k8s.io
   resources:
   - ingresses/status
   verbs:
@@ -100,7 +106,7 @@ rules:
 {{- end }}
 ---
 kind: ClusterRoleBinding
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: {{ include "nginx-ingress.name" . }}
   labels:
