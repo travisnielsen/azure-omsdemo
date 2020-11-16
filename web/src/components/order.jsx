@@ -12,6 +12,6 @@ export async function callOrderApi(order) {
     };
 
     return fetch(process.env.REACT_APP_REQUEST_URL, options)
-        .then(response => response.json())
+        .then(response => response.text())
         .catch(error => console.error(error));
 }

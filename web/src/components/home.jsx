@@ -26,7 +26,7 @@ const Home = () => {
         <>
             <div className="container App-content">
                 <div className="row">
-                    <Button variant="secondary" onClick={CreateOrder}>Request Profile Information</Button>
+                    <Button onClick={CreateOrder}>Create Order</Button>
                 </div>
             </div>
         </>
