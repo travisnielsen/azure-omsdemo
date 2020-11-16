@@ -40,13 +40,13 @@ const SignInSignOutButton = () => {
 
 export const PageLayout = (props) => {
 
-    let appInsights = null;
+    // let appInsights = null;
     let apiKey = process.env.REACT_APP_API_KEY;
 
     return (
         <>
             <BrowserRouter>
-                <TelemetryProvider instrumentationKey={apiKey} after={() => { appInsights = getAppInsights() }}>
+                <TelemetryProvider instrumentationKey={apiKey} after={() => { getAppInsights() }}>
                     <Route exact path="/" component={Home} />
                     <Route path="/about" component={About} />
                     <Navbar bg="primary" variant="dark" fixed="top">
