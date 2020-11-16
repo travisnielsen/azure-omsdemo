@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
+import { Helmet } from 'react-helmet';
 import "../styles/App.css";
 import { callOrderApi } from "./order.jsx";
 
@@ -24,9 +25,12 @@ const Home = () => {
 
     return (
         <>
-            <div className="container App-content">
-                <div className="row">
-                    <Button onClick={CreateOrder}>Create Order</Button>
+            <div>
+                <Helmet><title>Fabrikam | Home</title></Helmet>
+                <div className="container App-content">
+                    <div className="row">
+                        <Button variant="secondary" onClick={CreateOrder}>Create Order</Button>
+                    </div>
                 </div>
             </div>
         </>
